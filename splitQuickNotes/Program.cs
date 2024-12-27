@@ -21,8 +21,12 @@ namespace splitQuickNotes
 
                 bool xIsMarkdown = xInputFileExtension.Equals (".md", StringComparison.OrdinalIgnoreCase);
 
-                string xOutputDirectoryName = $"splitQuickNotes-{DateTime.UtcNow:yyyyMMdd'T'HHmmss'Z'}",
-                       xOutputDirectoryPath = yyPath.GetAbsolutePath (yySpecialDirectories.Desktop, xOutputDirectoryName);
+                // Assuming the input file path is absolute.
+                // The app no longer outputs to a timestamped directory on the desktop.
+                string xOutputDirectoryPath = yyPath.GetAbsolutePath (Path.GetDirectoryName (xInputFilePath)!, "Split");
+
+                if (Directory.Exists (xOutputDirectoryPath))
+                    Directory.Delete (xOutputDirectoryPath, recursive: true);
 
                 Directory.CreateDirectory (xOutputDirectoryPath);
 

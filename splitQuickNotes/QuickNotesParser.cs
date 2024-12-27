@@ -29,7 +29,7 @@ namespace splitQuickNotes
             {
                 string xSubstring = line [1..^1];
 
-                if (yyConvertor.TryStringToGuid (xSubstring, out Guid xGuid))
+                if (yyFormatter.TryStringToGuid (xSubstring, out Guid xGuid))
                     return new LineParseResult { Type = LineType.Guid, Guid = xGuid };
 
                 else if (yyFormatter.TryParseRoundtripDateTimeString (xSubstring, out DateTime xUtc))
@@ -71,7 +71,7 @@ namespace splitQuickNotes
                     QuickNote? xEntry = null;
 
                     if (xUtc != null && xContentLines.Count > 0)
-                        xEntry = new (xGuid, xUtc.Value, xTitle, BuildAndOptimizeContent (xContentLines, newLine));
+                        xEntry = new (xGuid, xUtc.Value, xTitle?.Trim (), BuildAndOptimizeContent (xContentLines, newLine));
 
                     xGuid = null;
                     xUtc = null;
@@ -133,7 +133,7 @@ namespace splitQuickNotes
 
             // At EOF:
             if (xUtc != null && xContentLines.Count > 0)
-                yield return new QuickNote (xGuid, xUtc.Value, xTitle, BuildAndOptimizeContent (xContentLines, newLine));
+                yield return new QuickNote (xGuid, xUtc.Value, xTitle?.Trim (), BuildAndOptimizeContent (xContentLines, newLine));
 
             yield break;
         }

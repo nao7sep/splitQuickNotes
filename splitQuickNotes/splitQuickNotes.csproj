@@ -23,7 +23,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\yyLib\yyLib\yyLib.csproj" />
+        <ProjectReference Include="..\..\yyLib\yyLib\yyLib.csproj">
+            <ExcludeAssets>runtime;native</ExcludeAssets>
+        </ProjectReference>
     </ItemGroup>
 
 </Project>
